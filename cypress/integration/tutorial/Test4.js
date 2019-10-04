@@ -16,5 +16,13 @@ describe('My Fourth Test Suite', function() {
       //Moooocha
       expect(str).to.equal('Hello , Are you sure you want to confirm?');
     });
+
+    cy.get('#opentab')
+      .invoke('removeAttr', 'target')
+      .click();
+
+    cy.url().should('include', 'qaclickacademy');
+
+    cy.go('back');
   });
 });

@@ -1,4 +1,4 @@
-describe('My Fifth Test Suite', function() {
+describe('My Sixth Test Suite', function() {
   it('still dont do a whole lotta jack shit', function() {
     cy.visit('https://rahulshettyacademy.com/AutomationPractice/');
 
@@ -12,5 +12,12 @@ describe('My Fifth Test Suite', function() {
       .invoke('show')
       .children();
     console.log(children);
+
+    // cy.get('#mousehover').invoke('show');
+    // cy.contains('Top').click();
+    //or
+
+    cy.contains('Top').click({ force: true });
+    cy.url().should('include', 'top');
   });
 });

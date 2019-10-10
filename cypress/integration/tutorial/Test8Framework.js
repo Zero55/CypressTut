@@ -12,7 +12,7 @@ describe('My 8 Test Suite', function() {
     const homePage = new HomePage();
     const productsPage = new ProductsPage();
 
-    cy.visit('https://rahulshettyacademy.com/angularpractice/');
+    cy.visit(Cypress.env('url'));
 
     homePage.getEditBox().type(this.data.name);
     homePage.getGender().select(this.data.gender);

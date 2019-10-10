@@ -1,28 +1,56 @@
+import HomePage from '../pageObjects/HomePage';
+import ProductsPage from '../pageObjects/ProductsPage';
+
 describe('My 8 Test Suite', function() {
   before(function() {
-    cy.fixture('userFixture').then(function(data) {
+    cy.fixture('userFixture').then(data => {
       this.data = data;
     });
   });
 
   it('maybe it do smtn useful now, idk', function() {
+    const homePage = new HomePage();
+    const productsPage = new ProductsPage();
+
     cy.visit('https://rahulshettyacademy.com/angularpractice/');
 
-    cy.get('input[name="name"]:nth-child(2)').type(this.data.name);
-    cy.get('select').select(this.data.gender);
-    cy.get(':nth-child(4) > .ng-untouched').should(
-      'have.value',
-      this.data.name
-    );
-    cy.get('input[name="name"]:nth-child(2)').should(
-      'have.attr',
-      'minlength',
-      '2'
-    );
-    cy.get('#inlineRadio3').should('be.disabled');
+    homePage.getEditBox().type(this.data.name);
+    homePage.getGender().select(this.data.gender);
+    homePage.getTwoWayDataBinding().should('have.value', this.data.name);
+    homePage.getEditBox().should('have.attr', 'minlength', '2');
+    homePage.getEntrepeneur().should('be.disabled');
     //
-    cy.get(':nth-child(2) > .nav-link').click();
+    homePage.getShopTab().click();
 
-    cy.selectProduct('Nokia');
+    this.data.productName.forEach(element => {
+      cy.selectProduct(element);
+    });
+    productsPage.getCartButton().click();
+    let addedTotals = 0;
+    productsPage
+      .getPriceTotalColumn()
+
+      .each(($el, index, $list) => {
+        const scrubTotals = Number($el.text().match(/\d+/)[0]);
+        addedTotals += scrubTotals;
+      })
+      .then(() => {
+        cy.log('AddedTotals: ' + addedTotals);
+      });
+    cy.get('h3 strong').then(element => {
+      const scrubTotalPrice = Number(element.text().match(/\d+/)[0]);
+      cy.log('TotalPrice: ' + scrubTotalPrice);
+      expect(scrubTotalPrice).to.equal(addedTotals);
+    });
+    productsPage.getCheckoutButton().click();
+    productsPage.getShipField().type('India');
+    cy.wait(6000);
+    productsPage.getShipSuggestion().click();
+    productsPage.getCheckboxButton().click({ force: true });
+    productsPage.getPurchaseButton().click();
+    productsPage.getAlert().then(element => {
+      const actualText = element.text();
+      expect(actualText.includes('Success')).to.be.true;
+    });
   });
 });

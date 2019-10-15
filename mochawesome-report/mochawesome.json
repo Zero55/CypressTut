@@ -1,0 +1,99 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2019-10-15T22:08:44.575Z",
+    "end": "2019-10-15T22:09:02.367Z",
+    "duration": 17792,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "991fbc4e-bde0-466e-abac-088c1d4ab437",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5266f3a8-11d7-4b35-aeb3-13e1d7534ed7",
+          "title": "My 8 Test Suite",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "maybe it do smtn useful now, idk",
+              "fullTitle": "My 8 Test Suite maybe it do smtn useful now, idk",
+              "timedOut": null,
+              "duration": 14701,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var homePage = new _HomePage.default();\nvar productsPage = new _ProductsPage.default();\ncy.visit(Cypress.env('url'));\nhomePage.getEditBox().type(this.data.name);\nhomePage.getGender().select(this.data.gender);\nhomePage.getTwoWayDataBinding().should('have.value', this.data.name);\nhomePage.getEditBox().should('have.attr', 'minlength', '2');\nhomePage.getEntrepeneur().should('be.disabled'); //\nhomePage.getShopTab().click();\nthis.data.productName.forEach(function (element) {\n  cy.selectProduct(element);\n});\nproductsPage.getCartButton().click();\nvar addedTotals = 0;\nproductsPage.getPriceTotalColumn().each(function ($el, index, $list) {\n  var scrubTotals = Number($el.text().match(/\\d+/)[0]);\n  addedTotals += scrubTotals;\n}).then(function () {\n  cy.log('AddedTotals: ' + addedTotals);\n});\ncy.get('h3 strong').then(function (element) {\n  var scrubTotalPrice = Number(element.text().match(/\\d+/)[0]);\n  cy.log('TotalPrice: ' + scrubTotalPrice);\n  expect(scrubTotalPrice).to.equal(addedTotals);\n});\nproductsPage.getCheckoutButton().click();\nproductsPage.getShipField().type('India');\ncy.wait(6000);\nproductsPage.getShipSuggestion().click();\nproductsPage.getCheckboxButton().click({\n  force: true\n});\nproductsPage.getPurchaseButton().click();\nproductsPage.getAlert().then(function (element) {\n  var actualText = element.text();\n  expect(actualText.includes('Success')).to.be.true;\n});",
+              "err": {},
+              "uuid": "608acd0d-2cb6-444c-8cf9-12017a343733",
+              "parentUUID": "5266f3a8-11d7-4b35-aeb3-13e1d7534ed7",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "608acd0d-2cb6-444c-8cf9-12017a343733"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 14701,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "5.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {},
+      "version": "4.0.1"
+    }
+  }
+}

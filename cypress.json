@@ -2,5 +2,7 @@
   "chromeWebSecurity": false,
   "env": {
     "url": "https://rahulshettyacademy.com/angularpractice/"
-  }
+  },
+  "projectId": "kfxq15",
+  "reporter": "mochawesome"
 }

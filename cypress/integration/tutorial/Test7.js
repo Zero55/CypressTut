@@ -5,7 +5,9 @@ describe('My Seventh Test Suite', function() {
     cy.get('#opentab').then(function(el) {
       const url = el.prop('href');
       cy.log(url);
-      cy.visit(url);
+      cy.request(url)
+        .its('body')
+        .should('include', '<html>');
     });
   });
 });
